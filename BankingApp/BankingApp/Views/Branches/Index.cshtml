@@ -1,0 +1,61 @@
+﻿@model IEnumerable<BankingApp.Models.Branch>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New Bracnch", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model=> model.IFSC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BranchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BranchAddress)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.IFSC)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.BranchName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.BranchAddress)
+    </td>
+    <td>
+    <td>
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Delete", "Delete", new { id = item.IFSC })<text> | </text>
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Details", "Details", new { id = item.IFSC }) <text> | </text>
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = item.IFSC }) <text> | </text>
+        }
+
+        @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+    </td>
+    </td>
+</tr>
+}
+
+</table>

@@ -1,0 +1,58 @@
+﻿@model BookStore.Models.order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BillAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BillAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CustName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CustName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Book1.BookName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Book1.BookName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

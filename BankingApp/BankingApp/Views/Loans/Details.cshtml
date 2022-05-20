@@ -1,0 +1,45 @@
+﻿@model BankingApp.Models.Loan
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Loan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LoanID)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.LoanType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoanType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoanAmt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoanAmt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CustName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CustName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LoanID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BankProjectDBModelStoreContainer" CdmEntityContainer="BankProjectDBEntities1">
+    <EntitySetMapping Name="BankEmployees">
+      <EntityTypeMapping TypeName="BankProjectDBModel.BankEmployee">
+        <MappingFragment StoreEntitySet="BankEmployees">
+          <ScalarProperty Name="GENDER" ColumnName="Gender" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="BranchOffice" ColumnName="BranchOffice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Branches">
+      <EntityTypeMapping TypeName="BankProjectDBModel.Branch">
+        <MappingFragment StoreEntitySet="Branches">
+          <ScalarProperty Name="IFSC" ColumnName="IFSC" />
+          <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+          <ScalarProperty Name="BranchAddress" ColumnName="BranchAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="BankProjectDBModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="AccNo" ColumnName="AccNo" />
+          <ScalarProperty Name="CustName" ColumnName="CustName" />
+          <ScalarProperty Name="CustAddress" ColumnName="CustAddress" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+          <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="BranchIFSC" ColumnName="BranchIFSC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Loans">
+      <EntityTypeMapping TypeName="BankProjectDBModel.Loan">
+        <MappingFragment StoreEntitySet="Loans">
+          <ScalarProperty Name="LoanID" ColumnName="LoanID" />
+          <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+          <ScalarProperty Name="LoanAmt" ColumnName="LoanAmt" />
+          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleMasters">
+      <EntityTypeMapping TypeName="BankProjectDBModel.RoleMaster">
+        <MappingFragment StoreEntitySet="RoleMasters">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RollName" ColumnName="RollName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="BankProjectDBModel.Transaction">
+        <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="transID" ColumnName="transID" />
+          <ScalarProperty Name="TransTime" ColumnName="TransTime" />
+          <ScalarProperty Name="TransType" ColumnName="TransType" />
+          <ScalarProperty Name="transFrom_accno" ColumnName="transFrom_accno" />
+          <ScalarProperty Name="transTo_accNo" ColumnName="transTo_accNo" />
+          <ScalarProperty Name="transAmount" ColumnName="transAmount" />
+          <ScalarProperty Name="trans_remark" ColumnName="trans_remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRolesMappings">
+      <EntityTypeMapping TypeName="BankProjectDBModel.UserRolesMapping">
+        <MappingFragment StoreEntitySet="UserRolesMappings">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="BankProjectDBModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

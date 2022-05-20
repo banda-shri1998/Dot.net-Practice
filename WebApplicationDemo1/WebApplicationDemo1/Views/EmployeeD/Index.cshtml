@@ -1,0 +1,43 @@
+﻿@model WebDemo1.ViewModels.ViewEmpDetails
+@{
+    ViewBag.Title = "Index";
+    var emplist = Model.Employee.ToList();
+    var addlist = Model.Address.ToList();
+}
+<table border="1">
+    <thead>
+        <tr>
+            <th>Empid</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Salary</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>ZipCode</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in emplist)
+        {
+            <tr>
+                <td>@i.empID</td>
+                <td> @i.EName</td>
+                <td> @i.Gender</td>
+                <td> @i.Salary</td>
+                @foreach (var a in addlist)
+                {
+                    if (i.empID == a.empID)
+                    {
+                        <td>@a.address</td>
+                        <td> @a.city</td>
+                        <td> @a.state</td>
+                        <td> @a.pincode</td>
+
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<h2>Employee Count:@emplist.Count</h2>

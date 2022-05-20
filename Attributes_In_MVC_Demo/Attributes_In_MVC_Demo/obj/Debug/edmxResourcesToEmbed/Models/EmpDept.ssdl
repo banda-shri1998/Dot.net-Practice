@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DotnetF1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Location" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="EmployeeJK">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpName" Type="varchar" MaxLength="100" />
+    <Property Name="Gender" Type="varchar" MaxLength="10" />
+    <Property Name="Salary" Type="int" />
+    <Property Name="Designation" Type="varchar" MaxLength="20" />
+    <Property Name="DeptId" Type="int" />
+  </EntityType>
+  <Association Name="fk_did">
+    <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+    <End Role="EmployeeJK" Type="Self.EmployeeJK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="EmployeeJK">
+        <PropertyRef Name="DeptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DotnetF1ModelStoreContainer">
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeJK" EntityType="Self.EmployeeJK" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_did" Association="Self.fk_did">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="EmployeeJK" EntitySet="EmployeeJK" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

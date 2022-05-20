@@ -1,0 +1,66 @@
+﻿@model BankingApp.Models.Transaction
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Transaction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TransTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.transAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.transAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.trans_remark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.trans_remark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CustName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CustName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer1.CustName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer1.CustName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.transID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

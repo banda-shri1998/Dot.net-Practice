@@ -1,0 +1,75 @@
+﻿@model IEnumerable<BankingApp.Models.Transaction>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @if (User.IsInRole("Employee")) { 
+    @Html.ActionLink("Create New", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TransTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.trans_remark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.CustName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransType)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Customer1.CustName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.transAmount)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.TransTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.trans_remark)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.CustName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TransType)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer1.CustName)
+    </td>
+    <td>
+        @if (item.TransType.Equals("Credit"))
+        {
+            <span style="color:green">@item.transAmount</span>
+        }
+        @if (item.TransType.Equals("Debit"))
+        {
+            <span style="color:red">@item.transAmount </span>
+        }
+    </td>
+    <td>
+        @if (User.IsInRole("Customer") || User.IsInRole("Employee"))
+        {
+            @Html.ActionLink("Details", "Details", new { id = item.transFrom_accno }) <text> | </text>
+        }
+        @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+    </td>
+</tr>
+}
+
+</table>

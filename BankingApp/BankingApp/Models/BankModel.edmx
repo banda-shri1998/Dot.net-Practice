@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BankProjectDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BankEmployees">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BranchOffice" Type="int" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="Branches">
+          <Key>
+            <PropertyRef Name="IFSC" />
+          </Key>
+          <Property Name="IFSC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchName" Type="varchar(max)" Nullable="false" />
+          <Property Name="BranchAddress" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="AccNo" />
+          </Key>
+          <Property Name="AccNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustAddress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="PhoneNo" Type="bigint" Nullable="false" />
+          <Property Name="GENDER" Type="char" MaxLength="6" />
+          <Property Name="AccountType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="BranchIFSC" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Loans">
+          <Key>
+            <PropertyRef Name="LoanID" />
+          </Key>
+          <Property Name="LoanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoanType" Type="varchar" MaxLength="20" />
+          <Property Name="LoanAmt" Type="money" Nullable="false" />
+          <Property Name="AccountNo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoleMasters">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RollName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="transID" />
+          </Key>
+          <Property Name="transID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransTime" Type="datetime" Nullable="false" />
+          <Property Name="TransType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="transFrom_accno" Type="int" Nullable="false" />
+          <Property Name="transTo_accNo" Type="int" Nullable="false" />
+          <Property Name="transAmount" Type="money" Nullable="false" />
+          <Property Name="trans_remark" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRolesMappings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPassword" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__BankEmplo__Branc__398D8EEE">
+          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
+          <End Role="BankEmployees" Type="Self.BankEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="IFSC" />
+            </Principal>
+            <Dependent Role="BankEmployees">
+              <PropertyRef Name="BranchOffice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__Branch__44FF419A">
+          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="IFSC" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="BranchIFSC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Loan__AccountNo__4316F928">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Loans" Type="Self.Loans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="AccNo" />
+            </Principal>
+            <Dependent Role="Loans">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__trans__3F466844">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="AccNo" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="transFrom_accno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__trans__403A8C7D">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="AccNo" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="transTo_accNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__RoleI__3A81B327">
+          <End Role="RoleMasters" Type="Self.RoleMasters" Multiplicity="1" />
+          <End Role="UserRolesMappings" Type="Self.UserRolesMappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleMasters">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRolesMappings">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__UserI__3B75D760">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserRolesMappings" Type="Self.UserRolesMappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRolesMappings">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankProjectDBModelStoreContainer">
+          <EntitySet Name="BankEmployees" EntityType="Self.BankEmployees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Loans" EntityType="Self.Loans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleMasters" EntityType="Self.RoleMasters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRolesMappings" EntityType="Self.UserRolesMappings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BankEmplo__Branc__398D8EEE" Association="Self.FK__BankEmplo__Branc__398D8EEE">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="BankEmployees" EntitySet="BankEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__Branch__44FF419A" Association="Self.FK__Customer__Branch__44FF419A">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Loan__AccountNo__4316F928" Association="Self.FK__Loan__AccountNo__4316F928">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Loans" EntitySet="Loans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__trans__3F466844" Association="Self.FK__Transacti__trans__3F466844">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__trans__403A8C7D" Association="Self.FK__Transacti__trans__403A8C7D">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__RoleI__3A81B327" Association="Self.FK__UserRoles__RoleI__3A81B327">
+            <End Role="RoleMasters" EntitySet="RoleMasters" />
+            <End Role="UserRolesMappings" EntitySet="UserRolesMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__UserI__3B75D760" Association="Self.FK__UserRoles__UserI__3B75D760">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRolesMappings" EntitySet="UserRolesMappings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BankProjectDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BankEmployee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BranchOffice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__BankEmplo__Branc__398D8EEE" FromRole="BankEmployees" ToRole="Branches" />
+          <Property Name="GENDER" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="IFSC" />
+          </Key>
+          <Property Name="IFSC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BranchAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BankEmployees" Relationship="Self.FK__BankEmplo__Branc__398D8EEE" FromRole="Branches" ToRole="BankEmployees" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Branch__44FF419A" FromRole="Branches" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="AccNo" />
+          </Key>
+          <Property Name="AccNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PhoneNo" Type="Int64" Nullable="false" />
+          <Property Name="GENDER" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="AccountType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="BranchIFSC" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__Customer__Branch__44FF419A" FromRole="Customers" ToRole="Branches" />
+          <NavigationProperty Name="Loans" Relationship="Self.FK__Loan__AccountNo__4316F928" FromRole="Customers" ToRole="Loans" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__trans__3F466844" FromRole="Customers" ToRole="Transactions" />
+          <NavigationProperty Name="Transactions1" Relationship="Self.FK__Transacti__trans__403A8C7D" FromRole="Customers" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Loan">
+          <Key>
+            <PropertyRef Name="LoanID" />
+          </Key>
+          <Property Name="LoanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoanType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LoanAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="AccountNo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Loan__AccountNo__4316F928" FromRole="Loans" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="RoleMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RollName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserRolesMappings" Relationship="Self.FK__UserRoles__RoleI__3A81B327" FromRole="RoleMasters" ToRole="UserRolesMappings" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="transID" />
+          </Key>
+          <Property Name="transID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="transFrom_accno" Type="Int32" Nullable="false" />
+          <Property Name="transTo_accNo" Type="Int32" Nullable="false" />
+          <Property Name="transAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="trans_remark" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Transacti__trans__3F466844" FromRole="Transactions" ToRole="Customers" />
+          <NavigationProperty Name="Customer1" Relationship="Self.FK__Transacti__trans__403A8C7D" FromRole="Transactions" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="UserRolesMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RoleMaster" Relationship="Self.FK__UserRoles__RoleI__3A81B327" FromRole="UserRolesMappings" ToRole="RoleMasters" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserRoles__UserI__3B75D760" FromRole="UserRolesMappings" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserRolesMappings" Relationship="Self.FK__UserRoles__UserI__3B75D760" FromRole="Users" ToRole="UserRolesMappings" />
+        </EntityType>
+        <Association Name="FK__BankEmplo__Branc__398D8EEE">
+          <End Role="Branches" Type="Self.Branch" Multiplicity="1" />
+          <End Role="BankEmployees" Type="Self.BankEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="IFSC" />
+            </Principal>
+            <Dependent Role="BankEmployees">
+              <PropertyRef Name="BranchOffice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__Branch__44FF419A">
+          <End Role="Branches" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="IFSC" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="BranchIFSC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Loan__AccountNo__4316F928">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Loans" Type="Self.Loan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="AccNo" />
+            </Principal>
+            <Dependent Role="Loans">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__trans__3F466844">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="AccNo" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="transFrom_accno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__trans__403A8C7D">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="AccNo" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="transTo_accNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__RoleI__3A81B327">
+          <End Role="RoleMasters" Type="Self.RoleMaster" Multiplicity="1" />
+          <End Role="UserRolesMappings" Type="Self.UserRolesMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleMasters">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRolesMappings">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__UserI__3B75D760">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRolesMappings" Type="Self.UserRolesMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRolesMappings">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankProjectDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BankEmployees" EntityType="Self.BankEmployee" />
+          <EntitySet Name="Branches" EntityType="Self.Branch" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Loans" EntityType="Self.Loan" />
+          <EntitySet Name="RoleMasters" EntityType="Self.RoleMaster" />
+          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+          <EntitySet Name="UserRolesMappings" EntityType="Self.UserRolesMapping" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__BankEmplo__Branc__398D8EEE" Association="Self.FK__BankEmplo__Branc__398D8EEE">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="BankEmployees" EntitySet="BankEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__Branch__44FF419A" Association="Self.FK__Customer__Branch__44FF419A">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Loan__AccountNo__4316F928" Association="Self.FK__Loan__AccountNo__4316F928">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Loans" EntitySet="Loans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__trans__3F466844" Association="Self.FK__Transacti__trans__3F466844">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__trans__403A8C7D" Association="Self.FK__Transacti__trans__403A8C7D">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__RoleI__3A81B327" Association="Self.FK__UserRoles__RoleI__3A81B327">
+            <End Role="RoleMasters" EntitySet="RoleMasters" />
+            <End Role="UserRolesMappings" EntitySet="UserRolesMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__UserI__3B75D760" Association="Self.FK__UserRoles__UserI__3B75D760">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRolesMappings" EntitySet="UserRolesMappings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BankProjectDBModelStoreContainer" CdmEntityContainer="BankProjectDBEntities1">
+          <EntitySetMapping Name="BankEmployees">
+            <EntityTypeMapping TypeName="BankProjectDBModel.BankEmployee">
+              <MappingFragment StoreEntitySet="BankEmployees">
+                <ScalarProperty Name="GENDER" ColumnName="Gender" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BranchOffice" ColumnName="BranchOffice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="BankProjectDBModel.Branch">
+              <MappingFragment StoreEntitySet="Branches">
+                <ScalarProperty Name="IFSC" ColumnName="IFSC" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BranchAddress" ColumnName="BranchAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="BankProjectDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="AccNo" ColumnName="AccNo" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustAddress" ColumnName="CustAddress" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="BranchIFSC" ColumnName="BranchIFSC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loans">
+            <EntityTypeMapping TypeName="BankProjectDBModel.Loan">
+              <MappingFragment StoreEntitySet="Loans">
+                <ScalarProperty Name="LoanID" ColumnName="LoanID" />
+                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+                <ScalarProperty Name="LoanAmt" ColumnName="LoanAmt" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleMasters">
+            <EntityTypeMapping TypeName="BankProjectDBModel.RoleMaster">
+              <MappingFragment StoreEntitySet="RoleMasters">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RollName" ColumnName="RollName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="BankProjectDBModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="transID" ColumnName="transID" />
+                <ScalarProperty Name="TransTime" ColumnName="TransTime" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="transFrom_accno" ColumnName="transFrom_accno" />
+                <ScalarProperty Name="transTo_accNo" ColumnName="transTo_accNo" />
+                <ScalarProperty Name="transAmount" ColumnName="transAmount" />
+                <ScalarProperty Name="trans_remark" ColumnName="trans_remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRolesMappings">
+            <EntityTypeMapping TypeName="BankProjectDBModel.UserRolesMapping">
+              <MappingFragment StoreEntitySet="UserRolesMappings">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BankProjectDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

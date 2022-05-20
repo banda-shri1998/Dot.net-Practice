@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteValidationDemo", "RemoteValidationDemo\RemoteValidationDemo.csproj", "{6E4352A7-0AE6-4937-8BB6-289411E572A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E4352A7-0AE6-4937-8BB6-289411E572A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E4352A7-0AE6-4937-8BB6-289411E572A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E4352A7-0AE6-4937-8BB6-289411E572A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E4352A7-0AE6-4937-8BB6-289411E572A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {558B9A8C-D073-4525-B9B5-FC186D1B9D56}
+	EndGlobalSection
+EndGlobal

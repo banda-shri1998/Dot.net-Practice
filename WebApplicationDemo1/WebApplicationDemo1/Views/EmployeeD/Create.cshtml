@@ -1,0 +1,15 @@
+﻿@using WebDemo1.Models;
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm()) {
+    @Html.Label("Employee id", "Employee id")<t/>
+    @Html.TextBox("Employee id",102)<br />
+    @Html.Label("Gender","Gender")
+    @Html.RadioButton("Gender","Male")<tr/>
+    @Html.RadioButton("Female","Female")<tr/>
+}
+
+<h2>Create</h2>
+

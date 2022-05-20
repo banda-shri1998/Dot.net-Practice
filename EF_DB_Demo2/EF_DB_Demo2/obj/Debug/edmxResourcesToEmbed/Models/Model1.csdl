@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DotnetF1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EmployeeJKs" Relationship="Self.fk_did" FromRole="Department" ToRole="EmployeeJK" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Empid" />
+    </Key>
+    <Property Name="Empid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Salary" Type="Int32" />
+  </EntityType>
+  <EntityType Name="EmployeeJK">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmpName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Salary" Type="Int32" />
+    <Property Name="Designation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DeptId" Type="Int32" />
+    <NavigationProperty Name="Department" Relationship="Self.fk_did" FromRole="EmployeeJK" ToRole="Department" />
+  </EntityType>
+  <EntityType Name="tblDepartment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblEmployees" Relationship="Self.fk_deptid" FromRole="tblDepartment" ToRole="tblEmployee" />
+  </EntityType>
+  <EntityType Name="tblEmployee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="departmentid" Type="Int32" />
+    <NavigationProperty Name="tblDepartment" Relationship="Self.fk_deptid" FromRole="tblEmployee" ToRole="tblDepartment" />
+  </EntityType>
+  <Association Name="fk_did">
+    <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+    <End Role="EmployeeJK" Type="Self.EmployeeJK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="EmployeeJK">
+        <PropertyRef Name="DeptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_deptid">
+    <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="0..1" />
+    <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDepartment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblEmployee">
+        <PropertyRef Name="departmentid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DotnetF1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Departments" EntityType="Self.Department" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="EmployeeJKs" EntityType="Self.EmployeeJK" />
+    <EntitySet Name="tblDepartments" EntityType="Self.tblDepartment" />
+    <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
+    <AssociationSet Name="fk_did" Association="Self.fk_did">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="EmployeeJK" EntitySet="EmployeeJKs" />
+    </AssociationSet>
+    <AssociationSet Name="fk_deptid" Association="Self.fk_deptid">
+      <End Role="tblDepartment" EntitySet="tblDepartments" />
+      <End Role="tblEmployee" EntitySet="tblEmployees" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

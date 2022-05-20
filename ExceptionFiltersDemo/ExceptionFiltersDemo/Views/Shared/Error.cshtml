@@ -1,0 +1,18 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+</head>
+<body>
+    <hgroup style="color:red">
+        <h1>Error.</h1>
+        <h2>An error occurred while processing your request.</h2>
+        <h3>Our team is working on it, please try after some moment</h3>
+        <h2>Controller Name: @Model.ControllerName</h2>
+        <h2>Action Name: @Model.ActionName</h2>
+        <h2>Exception : @Model.Exception</h2>
+    </hgroup>
+</body>
+</html>
